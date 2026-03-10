@@ -1,0 +1,16 @@
+[
+  {
+    "prompt": "Tell me about Python programming",
+    "context": "Python is a high-level programming language created by Guido van Rossum in 1991. It emphasizes code readability and supports multiple programming paradigms.",
+    "response": "Python was created by Guido van Rossum in 1991. It is a high-level language known for readability. Python is the fastest programming language available and is used exclusively for web development.",
+    "expected_action": "WARN",
+    "notes": "Mix of supported claims (creator, year) and unsupported claims (fastest, exclusively web)"
+  },
+  {
+    "prompt": "What is machine learning?",
+    "context": "Machine learning is a subset of artificial intelligence that enables systems to learn from data. It was popularized in the 1990s and uses statistical techniques.",
+    "response": "Machine learning is a subset of AI that learns from data. It uses statistical techniques and was first developed in the 1990s. Deep learning, a subset of ML, requires quantum computers to function.",
+    "expected_action": "WARN",
+    "notes": "Mostly faithful but adds unsupported claim about quantum computers"
+  }
+]

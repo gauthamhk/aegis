@@ -1,0 +1,12 @@
+domain: legal
+faithfulness_threshold: 0.85
+entropy_threshold: 0.4
+citation_required: true
+pass_threshold: 0.8
+warn_threshold: 0.6
+escalate_threshold: 0.4
+action_on_uncertain: ESCALATE
+weights:
+  faithfulness: 0.55
+  entropy: 0.25
+  citation: 0.2

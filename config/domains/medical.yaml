@@ -1,0 +1,12 @@
+domain: medical
+faithfulness_threshold: 0.9
+entropy_threshold: 0.3
+citation_required: true
+pass_threshold: 0.85
+warn_threshold: 0.7
+escalate_threshold: 0.5
+action_on_uncertain: ESCALATE
+weights:
+  faithfulness: 0.6
+  entropy: 0.25
+  citation: 0.15

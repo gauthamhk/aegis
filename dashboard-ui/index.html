@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegis Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e1e5ee; }
+        .header { background: #1a1d27; padding: 20px 32px; border-bottom: 1px solid #2a2d3a; display: flex; align-items: center; gap: 16px; }
+        .header h1 { font-size: 24px; font-weight: 700; }
+        .header .tagline { color: #8b8fa3; font-size: 14px; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; padding: 24px 32px; }
+        .card { background: #1a1d27; border-radius: 12px; padding: 24px; border: 1px solid #2a2d3a; }
+        .card .label { font-size: 13px; color: #8b8fa3; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .card .value { font-size: 36px; font-weight: 700; }
+        .card .value.green { color: #22c55e; }
+        .card .value.yellow { color: #eab308; }
+        .card .value.red { color: #ef4444; }
+        .card .value.blue { color: #3b82f6; }
+        .section { padding: 0 32px 24px; }
+        .section h2 { font-size: 18px; margin-bottom: 16px; }
+        table { width: 100%; border-collapse: collapse; background: #1a1d27; border-radius: 12px; overflow: hidden; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #2a2d3a; }
+        th { color: #8b8fa3; font-size: 13px; text-transform: uppercase; }
+        .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+        .badge.pass { background: #22c55e20; color: #22c55e; }
+        .badge.warn { background: #eab30820; color: #eab308; }
+        .badge.block { background: #ef444420; color: #ef4444; }
+        .badge.escalate { background: #3b82f620; color: #3b82f6; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="status-dot" id="statusDot"></div>
+        <div>
+            <h1>Aegis</h1>
+            <div class="tagline">Real-Time Hallucination Detection Firewall</div>
+        </div>
+    </div>
+
+    <div class="grid" id="statsGrid">
+        <div class="card">
+            <div class="label">Total Requests (24h)</div>
+            <div class="value blue" id="totalRequests">--</div>
+        </div>
+        <div class="card">
+            <div class="label">Passed</div>
+            <div class="value green" id="passed">--</div>
+        </div>
+        <div class="card">
+            <div class="label">Warned</div>
+            <div class="value yellow" id="warned">--</div>
+        </div>
+        <div class="card">
+            <div class="label">Blocked</div>
+            <div class="value red" id="blocked">--</div>
+        </div>
+        <div class="card">
+            <div class="label">Avg Score</div>
+            <div class="value blue" id="avgScore">--</div>
+        </div>
+        <div class="card">
+            <div class="label">Avg Latency</div>
+            <div class="value" id="avgLatency">--</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Recent Drift Events</h2>
+        <table>
+            <thead><tr><th>Time</th><th>Severity</th><th>Z-Score</th><th>Window Mean</th><th>Baseline Mean</th></tr></thead>
+            <tbody id="driftTable"><tr><td colspan="5" style="color:#8b8fa3">No drift events detected</td></tr></tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+
+        async function fetchStats() {
+            try {
+                const res = await fetch(`${API_BASE}/v1/dashboard/stats`);
+                const data = await res.json();
+                const s = data.realtime;
+                document.getElementById('totalRequests').textContent = s.total || 0;
+                document.getElementById('passed').textContent = s.passed || 0;
+                document.getElementById('warned').textContent = s.warned || 0;
+                document.getElementById('blocked').textContent = s.blocked || 0;
+                document.getElementById('avgScore').textContent = s.avg_score || '--';
+                document.getElementById('avgLatency').textContent = s.avg_latency_ms ? s.avg_latency_ms + 'ms' : '--';
+
+                if (data.recent_drift_events && data.recent_drift_events.length > 0) {
+                    const tbody = document.getElementById('driftTable');
+                    tbody.innerHTML = data.recent_drift_events.map(e => `
+                        <tr>
+                            <td>${new Date(e.timestamp * 1000).toLocaleString()}</td>
+                            <td><span class="badge ${e.severity}">${e.severity}</span></td>
+                            <td>${e.z_score}</td>
+                            <td>${e.window_mean}</td>
+                            <td>${e.baseline_mean}</td>
+                        </tr>
+                    `).join('');
+                }
+                document.getElementById('statusDot').style.background = '#22c55e';
+            } catch {
+                document.getElementById('statusDot').style.background = '#ef4444';
+            }
+        }
+
+        fetchStats();
+        setInterval(fetchStats, 5000);
+    </script>
+</body>
+</html>

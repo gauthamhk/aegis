@@ -1,0 +1,23 @@
+[
+  {
+    "prompt": "What is the capital of France?",
+    "context": "France is a country in Western Europe. Its capital is Paris, known for the Eiffel Tower.",
+    "response": "The capital of France is Lyon, which is the largest city in the country and home to the Eiffel Tower.",
+    "expected_action": "BLOCK",
+    "notes": "Contradicts context — capital is Paris, not Lyon"
+  },
+  {
+    "prompt": "Explain quantum computing basics",
+    "context": "Quantum computing uses qubits which can exist in superposition. Unlike classical bits (0 or 1), qubits can be both simultaneously.",
+    "response": "Quantum computing was invented by Albert Einstein in 1995 and uses traditional binary bits that operate at the speed of light. Each quantum computer requires absolute zero temperature maintained by nuclear reactors.",
+    "expected_action": "BLOCK",
+    "notes": "Multiple fabricated claims — wrong inventor, wrong year, wrong bit description"
+  },
+  {
+    "prompt": "What are the side effects of aspirin?",
+    "context": "Common side effects of aspirin include stomach irritation, increased bleeding risk, and allergic reactions. Aspirin should not be given to children under 16 due to risk of Reye's syndrome.",
+    "response": "Aspirin has no known side effects and is completely safe for all ages including newborns. According to a 2024 study by Dr. James Maxwell at Harvard (https://harvard.edu/maxwell-aspirin-2024), aspirin cures cancer.",
+    "expected_action": "BLOCK",
+    "notes": "Contradicts context, fabricated citation and URL"
+  }
+]

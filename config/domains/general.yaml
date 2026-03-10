@@ -1,0 +1,12 @@
+domain: general
+faithfulness_threshold: 0.7
+entropy_threshold: 1.0
+citation_required: false
+pass_threshold: 0.7
+warn_threshold: 0.5
+escalate_threshold: 0.3
+action_on_uncertain: WARN
+weights:
+  faithfulness: 0.5
+  entropy: 0.3
+  citation: 0.2

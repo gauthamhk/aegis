@@ -1,0 +1,16 @@
+[
+  {
+    "prompt": "What is the capital of France?",
+    "context": "France is a country in Western Europe. Its capital is Paris, known for the Eiffel Tower.",
+    "response": "The capital of France is Paris. It is well known for the Eiffel Tower.",
+    "expected_action": "PASS",
+    "notes": "Directly supported by context"
+  },
+  {
+    "prompt": "Explain quantum computing basics",
+    "context": "Quantum computing uses qubits which can exist in superposition. Unlike classical bits (0 or 1), qubits can be both simultaneously. This allows quantum computers to process certain calculations exponentially faster.",
+    "response": "Quantum computing uses qubits instead of classical bits. While classical bits can only be 0 or 1, qubits can exist in superposition — being both states simultaneously. This enables exponentially faster processing for certain types of calculations.",
+    "expected_action": "PASS",
+    "notes": "Faithfully represents context"
+  }
+]
